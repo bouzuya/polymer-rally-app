@@ -1,0 +1,57 @@
+<link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="rally-spot.html">
+
+<dom-module id="rally-spot-list">
+  <template>
+    <style>
+      .spot-list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+      
+      .spot-list-item {
+        width: 100%;
+        height: 72px;
+      }
+    </style>
+    <iron-ajax
+      auto
+      url="https://api.rallyapp.jp/rallies/faithcreates.json"
+      handle-as="json"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+
+    <div class="spot-list">
+      <template is="dom-if" if="{{loading}}">
+        ...
+      </template>
+      <template is="dom-if" if="{{!loading}}">
+        <ul class="spot-list">
+          <template is="dom-repeat" items="{{spots}}">
+            <li class="spot-list-item">
+              <rally-spot spot="{{item}}"></rally-spot>
+            </li>
+          </template>
+        </ul>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'rally-spot-list',
+      properties: {
+        spots: {
+          type: Array,
+          computed: '_spots(response)'
+        }
+      },
+      _spots: function(response) {
+        return response.spots;
+      }
+    });
+  </script>
+</dom-module>

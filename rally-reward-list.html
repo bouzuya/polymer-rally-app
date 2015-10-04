@@ -1,0 +1,57 @@
+<link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="rally-reward.html">
+
+<dom-module id="rally-reward-list">
+  <template>
+    <style>
+      .reward-list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+      
+      .reward-list-item {
+        width: 100%;
+        height: 72px;
+      }
+    </style>
+    <iron-ajax
+      auto
+      url="https://api.rallyapp.jp/rallies/faithcreates.json"
+      handle-as="json"
+      last-response="{{response}}"
+      loading="{{loading}}"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+
+    <div class="reward-list">
+      <template is="dom-if" if="{{loading}}">
+        ...
+      </template>
+      <template is="dom-if" if="{{!loading}}">
+        <ul class="reward-list">
+          <template is="dom-repeat" items="{{rewards}}">
+            <li class="reward-list-item">
+              <rally-reward reward="{{item}}"></rally-reward>
+            </li>
+          </template>
+        </ul>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'rally-reward-list',
+      properties: {
+        rewards: {
+          type: Array,
+          computed: '_rewards(response)'
+        }
+      },
+      _rewards: function(response) {
+        return response.rewards;
+      }
+    });
+  </script>
+</dom-module>

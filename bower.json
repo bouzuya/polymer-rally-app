@@ -1,0 +1,13 @@
+{
+  "name": "polymer-rally-app",
+  "description": "RALLY App in Polymer (unofficial)",
+  "homepage": "",
+  "keywords": [
+  ],
+  "author": "",
+  "private": true,
+  "dependencies": {
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
+    "rally-stamp-rally": "bouzuya/polymer-rally-stamp-rally"
+  }
+}

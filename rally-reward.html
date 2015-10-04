@@ -1,0 +1,103 @@
+<link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="rally-reward">
+  <template>
+    <style>
+      .reward {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .reward > .name {
+        position: absolute;
+        top: 16px;
+        left: 0;
+        width: 100%;
+        font-size: 20px;
+        line-height: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-left: 72px;
+        box-sizing: border-box;
+      }
+
+      .reward > .image {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .reward > .image img {
+        display: block;
+        margin: 8px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+      }
+
+      .reward > .description {
+        position: absolute;
+        top: 36px;
+        left: 0;
+        width: 100%;
+        padding-left: 72px;
+        box-sizing: border-box;
+      }
+
+      .reward > .description p {
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+    </style>
+    <div class="reward">
+      <span class="name">{{name}}</span>
+      <span class="image"><img alt="" src="{{imageUrl}}" /></span>
+      <div class="description" id="description"></div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'rally-reward',
+      properties: {
+        reward: {
+          type: Object,
+          reflectToAttribute: true
+        },
+        description: {
+          type: String,
+          computed: '_description(reward)',
+          observer: '_descriptionChanged'
+        },
+        imageUrl: {
+          type: String,
+          computed: '_imageUrl(reward)'
+        },
+        name: {
+          type: String,
+          computed: '_name(reward)'
+        }
+      },
+      _description: function(reward) {
+        return reward.description;
+      },
+      _descriptionChanged: function() {
+        Polymer.dom(this.$.description).innerHTML = this.description;
+      },
+      _imageUrl: function(reward) {
+        return reward.images[0].s640;
+      },
+      _name: function(reward) {
+        return reward.name;
+      }
+    });
+  </script>
+</dom-module>
